@@ -1,0 +1,15 @@
+FROM node:10-alpine
+
+ENV NODE_ENV=development
+
+WORKDIR /home/node/app
+
+COPY package.json ./
+
+COPY . .
+
+RUN yarn install
+
+EXPOSE 5000
+
+CMD yarn run dev
