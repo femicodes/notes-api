@@ -34,7 +34,7 @@ class NotesController {
     }
   }
 
-  static async viewAllNotes(req, res) {
+  static async getAllNotes(req, res) {
     try {
       const user = req.user._id;
       const note = await Note
@@ -60,6 +60,24 @@ class NotesController {
     }
   }
 
+  static async getNote(req, res) {
+    try {
+      const noteFind = await Note.findOne({ user: req.user._id, _id: req.params.id });
+      if (!noteFind) return Response.error(res, 404, 'User or note not found!');
+
+      const data = {
+        id: noteFind._id,
+        title: noteFind.title,
+        body: noteFind.body,
+        createdAt: noteFind.createdAt,
+      };
+
+      return Response.success(res, 201, data);
+    } catch (error) {
+      return Response.error(res, 400, 'An error occured.');
+    }
+  }
+
   static async updateNote(req, res) {
     try {
       const { error } = validateNote(req.body);
@@ -68,7 +86,7 @@ class NotesController {
       const noteUpdate = await Note.findOneAndUpdate({ user: req.user._id, _id: req.params.id },
         { $set: req.body },
         { new: true });
-      if (!noteUpdate) return Response.error(res, 404, 'User with given username not found!');
+      if (!noteUpdate) return Response.error(res, 404, 'User or note not found!');
 
       const data = {
         id: noteUpdate._id,
@@ -78,6 +96,16 @@ class NotesController {
       };
 
       return Response.success(res, 201, data, 'Profile updated!');
+    } catch (error) {
+      return Response.error(res, 400, 'An error occured.');
+    }
+  }
+
+  static async deleteNote(req, res) {
+    try {
+      const noteDelete = await Note.findOneAndDelete({ user: req.user._id, _id: req.params.id });
+      if (!noteDelete) return Response.error(res, 404, 'User or note not found!');
+      return Response.success(res, 204, 'User or note not found!');
     } catch (error) {
       return Response.error(res, 400, 'An error occured.');
     }
