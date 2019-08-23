@@ -37,6 +37,7 @@ class NotesController {
   static async getAllNotes(req, res) {
     try {
       const user = req.user._id;
+
       const note = await Note
         .find({ user })
         .sort({ createdAt: -1 })

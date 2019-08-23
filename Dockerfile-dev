@@ -1,8 +1,10 @@
-FROM node:10-alpine
+FROM node:carbon
 
 ENV NODE_ENV=development
 
 WORKDIR /home/node/app
+
+RUN yarn global add nodemon
 
 COPY package.json ./
 

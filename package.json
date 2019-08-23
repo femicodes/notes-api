@@ -1,7 +1,7 @@
 {
-  "name": "tier-api",
+  "name": "notes-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server/app",
   "license": "MIT",
   "scripts": {
     "start": "node build/app",

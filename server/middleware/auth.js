@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import User from '../models/User';
+import Response from '../utils/Response';
 
 config();
 
@@ -12,13 +13,13 @@ class Auth {
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
       const user = await User.findOne({ _id: decoded._id });
       if (!user) {
-        res.status(400).json({ message: 'User not found.' });
+        return Response.error(res, 400, 'User doesn\'t exist!');
       }
       req.token = token;
       req.user = user;
-      next();
+      return next();
     } catch (error) {
-      res.status(401).send({ error: 'Please authenticate!' });
+      return Response.error(res, 400, 'Please authenticate!');
     }
   }
 }

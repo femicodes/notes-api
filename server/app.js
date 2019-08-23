@@ -38,7 +38,7 @@ mongoose.Promise = global.Promise;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-mongoose.connect(/* process.env.DB_URI */'mongodb://localhost:27017/notes-api', { useNewUrlParser: true });
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 
 app.listen(port, () => debugged(`Server running on port ${port} 🔥`));
 
