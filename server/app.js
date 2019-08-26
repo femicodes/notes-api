@@ -1,10 +1,11 @@
+import '@babel/polyfill';
+import 'newrelic';
 import express from 'express';
 import morgan from 'morgan';
 import debug from 'debug';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import '@babel/polyfill';
-import 'newrelic';
 import { config } from 'dotenv';
 import api from './routes/index';
 import Response from './utils/Response';
@@ -16,6 +17,7 @@ const port = process.env.PORT || 5000;
 const debugged = debug('server');
 
 app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
