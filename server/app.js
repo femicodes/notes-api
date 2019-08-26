@@ -4,6 +4,7 @@ import debug from 'debug';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import '@babel/polyfill';
+import 'newrelic';
 import { config } from 'dotenv';
 import api from './routes/index';
 import Response from './utils/Response';
